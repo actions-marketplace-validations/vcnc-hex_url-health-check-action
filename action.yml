@@ -1,6 +1,6 @@
-name: 'URL Health Check'
+name: 'GET URL Health Check'
 description: 'Ping given URL for a post-deploy check. With redirect and retrying capabilities'
-author: "Roman Nazarenko <me@jtalk.me>, Liza Lukicheva <me@bananamilkshake.me>, Severin Ibarluzea <github-noreply@seve.blog>"
+author: "Severin Ibarluzea <github-noreply@seve.blog>, Roman Nazarenko <me@jtalk.me>, Liza Lukicheva <me@bananamilkshake.me>"
 inputs:
   url:
     description: Target URL(s), split by |
