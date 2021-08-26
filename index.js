@@ -47,6 +47,10 @@ try {
   let maxTimeString = core.getInput("max-time") || "1m"
   let requestTimeoutString = core.getInput("request-timeout") || "10s"
 
+  core.info(
+    `maxAttempts ${maxAttemptsString} maxTime ${maxTimeString} requestTimeout ${requestTimeoutString}`
+  )
+
   let urls = urlString.split("|")
   let maxAttempts =
     maxAttemptsString === "forever" ||
