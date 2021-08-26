@@ -44,8 +44,8 @@ async function curl(url, { maxAttempts, maxTime, requestTimeout }) {
 try {
   let urlString = core.getInput("url", { required: true })
   let maxAttemptsString = core.getInput("max-attempts")
-  let maxTimeString = core.getInput("max-time")
-  let requestTimeoutString = core.getInput("request-timeout")
+  let maxTimeString = core.getInput("max-time") || "1m"
+  let requestTimeoutString = core.getInput("request-timeout") || "10s"
 
   let urls = urlString.split("|")
   let maxAttempts =

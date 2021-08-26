@@ -10,7 +10,7 @@ steps:
       # Check the following URLs one by one sequentially
       url: https://example.com|http://example.com
       # Max time to keep requesting url
-      max-time: 5m
+      max-time: 1m
       # Max time until a request times out
       request-timeout: 10s
       # Fail this action after this many failed attempts
