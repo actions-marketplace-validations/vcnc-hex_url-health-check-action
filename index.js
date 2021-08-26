@@ -44,7 +44,12 @@ try {
   let requestTimeoutString = core.getInput("request-timeout")
 
   let urls = urlString.split("|")
-  let maxAttempts = parseInt(maxAttemptsString)
+  let maxAttempts =
+    maxAttemptsString === "forever" ||
+    maxAttemptsString === "until-max-time" ||
+    maxAttemptsString === "infinite"
+      ? Infinity
+      : parseInt(maxAttemptsString)
   let maxTime = duration.parse(maxTimeString).milliseconds()
   let requestTimeout = duration.parse(requestTimeoutString).milliseconds()
 

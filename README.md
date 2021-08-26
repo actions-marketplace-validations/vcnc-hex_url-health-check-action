@@ -1,6 +1,6 @@
 # URL health check action
 
-A post-deploy health check with build-it redirect & retry. An quick & easy way to verify a deployment.   
+A post-deploy health check with build-it redirect & retry. An quick & easy way to verify a deployment.
 
 ```yaml
 steps:
@@ -14,5 +14,6 @@ steps:
       # Max time until a request times out
       request-timeout: 10s
       # Fail this action after this many failed attempts
+      # set to "until-max-time" to request forever
       max-attempts: 1 # Optional, defaults to 1
 ```
