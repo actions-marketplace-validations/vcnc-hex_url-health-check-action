@@ -18,14 +18,14 @@ async function curl(url, { maxAttempts, maxTime, requestTimeout }) {
   for (let i = 0; i < maxAttempts; i++) {
     core.info(`Checking ${url}`)
     res = await axios.get(url, { timeout: requestTimeout }).catch((e) => e)
-    if (res.success) {
+    if (res.status >= 200 && res.status < 300) {
       core.info("Got success response")
       success = true
       break
     } else {
       core.info(
         `Received: ${JSON.stringify(
-          res.data || res.response ? res.response.data : res.status
+          res.data || (res.response ? res.response.data : res.status)
         )}`
       )
     }
@@ -41,32 +41,36 @@ async function curl(url, { maxAttempts, maxTime, requestTimeout }) {
   }
 }
 
-try {
-  let urlString = core.getInput("url", { required: true })
-  let maxAttemptsString = core.getInput("max-attempts")
-  let maxTimeString = core.getInput("max-time") || "1m"
-  let requestTimeoutString = core.getInput("request-timeout") || "10s"
+async function main() {
+  try {
+    let urlString = core.getInput("url", { required: true })
+    let maxAttemptsString = core.getInput("max-attempts")
+    let maxTimeString = core.getInput("max-time") || "1m"
+    let requestTimeoutString = core.getInput("request-timeout") || "10s"
 
-  core.info(
-    `maxAttempts ${maxAttemptsString} maxTime ${maxTimeString} requestTimeout ${requestTimeoutString}`
-  )
+    core.info(
+      `maxAttempts ${maxAttemptsString} maxTime ${maxTimeString} requestTimeout ${requestTimeoutString}`
+    )
 
-  let urls = urlString.split("|")
-  let maxAttempts =
-    maxAttemptsString === "forever" ||
-    maxAttemptsString === "until-max-time" ||
-    maxAttemptsString === "infinite"
-      ? Infinity
-      : parseInt(maxAttemptsString)
-  let maxTime = duration.parse(maxTimeString).milliseconds()
-  let requestTimeout = duration.parse(requestTimeoutString).milliseconds()
+    let urls = urlString.split("|")
+    let maxAttempts =
+      maxAttemptsString === "forever" ||
+      maxAttemptsString === "until-max-time" ||
+      maxAttemptsString === "infinite"
+        ? Infinity
+        : parseInt(maxAttemptsString)
+    let maxTime = duration.parse(maxTimeString).milliseconds()
+    let requestTimeout = duration.parse(requestTimeoutString).milliseconds()
 
-  urls.forEach((url) => {
-    curl(url, { maxAttempts, maxTime, requestTimeout })
-  })
+    for (const url of urls) {
+      await curl(url, { maxAttempts, maxTime, requestTimeout })
+    }
 
-  core.info("Success")
-} catch (e) {
-  console.error("Error running action", e)
-  core.setFailed(e.message)
+    core.info("Success")
+  } catch (e) {
+    console.error("Error running action", e)
+    core.setFailed(e.message)
+  }
 }
+
+main()
