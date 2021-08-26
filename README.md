@@ -5,7 +5,7 @@ A post-deploy health check with build-it redirect & retry. An quick & easy way t
 ```yaml
 steps:
   - name: Check the deployed service URL
-    uses: seveibar/url-health-check-action@v1.5
+    uses: seveibar/url-health-check-action@v1.9
     with:
       # Check the following URLs one by one sequentially
       url: https://example.com|http://example.com
