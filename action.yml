@@ -9,21 +9,18 @@ inputs:
     description: Number of unsuccessful attempts to call URL before giving up
     required: false
     default: '1'
-  retry-delay:
-    description: Time between attempts (e.g. 3s, 1m)
+  request-timeout:
+    description: Time before allowing request to time out
     required: false
-    default: '3s'
-  follow-redirect:
-    description: Follow redirected location in case request resulted in 3XX status code
+    default: '10s'
+  max-time:
+    description: Time to wait before giving up
     required: false
-    default: 'false'
-  retry-all:
-    description: Retry all errors, including 4xx (see man curl on --retry-all-errors)
-    required: false
-    default: 'false'
+    default: '1m'
+  
 branding:
   icon: check
   color: purple
 runs:
-  using: 'node12'
+  using: 'node14'
   main: 'dist/index.js'
