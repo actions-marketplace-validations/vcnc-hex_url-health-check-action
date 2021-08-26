@@ -12,22 +12,22 @@ const processConfig = {
   encoding: "utf8",
 }
 
-async function curl(
-  url,
-  { maxAttempts, retryDelaySeconds, retryAll, followRedirect }
-) {
-  let success
+async function curl(url, { maxAttempts, maxTime, requestTimeout }) {
+  let success, res
+  const startTime = Date.now()
   for (let i = 0; i < maxAttempts; i++) {
     core.info(`Checking ${url}`)
-    const res = await axios
-      .get(url, { timeout: requestTimeout })
-      .catch((e) => e)
+    res = await axios.get(url, { timeout: requestTimeout }).catch((e) => e)
     if (res.success) {
       core.info("Got success response")
       success = true
       break
     } else {
       core.info(`Received: ${JSON.stringify(res?.data || res?.response?.data)}`)
+    }
+
+    if (Date.now() > startTime + maxTime) {
+      break
     }
     // Wait 100ms
     await new Promise((resolve) => setTimeout(resolve, 100))
