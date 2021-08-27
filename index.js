@@ -25,7 +25,8 @@ async function curl(url, { maxAttempts, maxTime, requestTimeout }) {
     } else {
       core.info(
         `Received: ${JSON.stringify(
-          res.data || (res.response ? res.response.data : res.status)
+          (res || {}).data ||
+            ((res || {}).response ? res.response.data : (res || {}).status)
         )}`
       )
     }
@@ -37,7 +38,10 @@ async function curl(url, { maxAttempts, maxTime, requestTimeout }) {
     await new Promise((resolve) => setTimeout(resolve, 100))
   }
   if (!success) {
-    throw new Error(JSON.stringify(res.data || res.response.data))
+    throw new Error(
+      "maxAttempts exceeded. Last error:\n" +
+        JSON.stringify((res || {}).data || ((res || {}).response || {}).data)
+    )
   }
 }
 
