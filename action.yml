@@ -1,6 +1,6 @@
-name: 'GET URL Health Check'
-description: 'Ping given URL for a post-deploy check. With redirect and retrying capabilities'
-author: "Severin Ibarluzea <github-noreply@seve.blog>, Roman Nazarenko <me@jtalk.me>, Liza Lukicheva <me@bananamilkshake.me>"
+name: "Axios URL Health Check"
+description: "Ping given URL for a post-deploy check. With redirect and retrying capabilities"
+author: "Severin Ibarluzea <github-noreply@seve.blog>, Roman Nazarenko <me@jtalk.me>, Liza Lukicheva <me@bananamilkshake.me>, vcnc-hex <hex@vcnc.co.kr>"
 inputs:
   url:
     description: Target URL(s), split by |
@@ -8,19 +8,22 @@ inputs:
   max-attempts:
     description: Number of unsuccessful attempts to call URL before giving up
     required: false
-    default: '1'
+    default: "1"
   request-timeout:
     description: Time before allowing request to time out
     required: false
-    default: '10s'
+    default: "10s"
   max-time:
     description: Time to wait before giving up
     required: false
-    default: '1m'
-  
+    default: "1m"
+  retry-delay:
+    description: Delay between retries
+    required: false
+    default: "1s"
 branding:
   icon: check
-  color: purple
+  color: green
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"

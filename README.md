@@ -5,7 +5,7 @@ A post-deploy health check with build-it redirect & retry. An quick & easy way t
 ```yaml
 steps:
   - name: Check the deployed service URL
-    uses: seveibar/url-health-check-action@v1.9
+    uses: vcnc-hex/url-health-check-action@v1
     with:
       # Check the following URLs one by one sequentially
       url: https://example.com|http://example.com
@@ -16,4 +16,6 @@ steps:
       # Fail this action after this many failed attempts
       # set to "until-max-time" to request forever
       max-attempts: 1 # Optional, defaults to 1
+      # Delay between retries
+      retry-delay: 1s
 ```
