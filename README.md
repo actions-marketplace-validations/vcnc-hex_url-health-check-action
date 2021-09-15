@@ -5,7 +5,7 @@ A post-deploy health check with build-it redirect & retry. An quick & easy way t
 ```yaml
 steps:
   - name: Check the deployed service URL
-    uses: vcnc-hex/url-health-check-action@v1
+    uses: vcnc-hex/url-health-check-action@v2
     with:
       # Check the following URLs one by one sequentially
       url: https://example.com|http://example.com

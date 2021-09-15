@@ -23,11 +23,7 @@ async function curl(url, { maxAttempts, maxTime, requestTimeout, retryDelay }) {
       success = true;
       break;
     } else {
-      core.info(
-        `Received: ${JSON.stringify(
-          res?.data || (res?.response ? res.response.data : (res || {})?.status)
-        )}`
-      );
+      core.info(`Received status: ${res.status}`);
     }
 
     if (Date.now() > startTime + maxTime) {
